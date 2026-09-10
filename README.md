@@ -1,5 +1,7 @@
 # SECURITY-TEST
 
+![SECURITY-TEST](assets/SECURITY-TEST-logo.svg)
+
 RU: Открытый стенд для исследования безопасности, поиска и проверки уязвимостей, анализа атак и разработки защитных механизмов.
 
 EN: An open environment for security research, vulnerability discovery and validation, attack analysis, and defensive mechanism development.
@@ -41,15 +43,17 @@ Possible destinations include SPACE, Guardian, SPACE-INTEGRITY, SPACE-SECURITY, 
 
 No destination is the default owner of SECURITY-TEST findings.
 
-## Repository registry
+## Canonical project map
 
-The canonical registry is `REPOSITORY-REGISTRY.md`.
-
-Important: the connected GitHub interface currently exposes a verified subset of the account. The working registry therefore distinguishes **verified repositories** from the **owner-declared total** instead of inventing missing repository names. The owner-declared current total is 73 repositories; the registry must be reconciled against GitHub before treating 73 as independently verified.
-
-## Architecture map
-
-`ARCHITECTURE-MAP.md` describes components as security-test contexts and verified relationships. It is not a dependency graph and must not create relationships merely by naming them.
+- `REPOSITORY-REGISTRY.md` — canonical 73-repository inventory anchor.
+- `ARCHITECTURE-MAP.md` — ecosystem test-context map; naming does not create dependencies.
+- `RESULT-HANDOFF.md` — neutral result-routing contract.
+- `SCOPE.md` — authorization and testing boundary.
+- `TEST-MATRIX.md` — security property test matrix.
+- `FINDING-LIFECYCLE.md` — discovery through regression.
+- `CASE_TEMPLATE.md` — standard security research case.
+- `METHODOLOGY.md` — research methodology.
+- `RULES.md` — operating rules.
 
 ## Case IDs
 
