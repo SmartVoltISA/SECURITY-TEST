@@ -8,13 +8,15 @@ EN: An open environment for security research, vulnerability discovery and valid
 
 ## Mission
 
-SECURITY-TEST is a controlled research organ for finding, validating, documenting, and learning from security weaknesses in explicitly authorized environments.
+SECURITY-TEST is an independent security research and validation environment. It does not own, control, or automatically report to any other repository or organ.
 
-The repository is an evidence base. A claim is not a finding until its supporting evidence and reproducible test are recorded.
+It can test different authorized targets across the ecosystem: SPACE, Guardian, GROWER, AGI, OMEGA, CORE, protocols, interfaces, products, research labs, and external targets where explicit authorization exists.
+
+A target appearing in the map does **not** create an architectural dependency or transfer ownership. Relationships are recorded only when they are explicitly verified.
 
 ## Research loop
 
-`SCOPE → MODEL → HYPOTHESIS → TEST → EVIDENCE → VALIDATION → REPORT → MITIGATION → REGRESSION`
+`SCOPE → MODEL → HYPOTHESIS → TEST → EVIDENCE → VALIDATION → CLASSIFICATION → ROUTING → MITIGATION → REGRESSION`
 
 ## Evidence vocabulary
 
@@ -31,9 +33,23 @@ The repository is an evidence base. A claim is not a finding until its supportin
 
 Research stays inside the target's explicitly authorized scope and rules. No unrelated systems, third-party accounts or data, service disruption, destructive actions, persistence, or irreversible changes. Use the minimum-impact proof necessary to establish a finding.
 
-## Guardian handoff
+## Neutral routing principle
 
-Validated findings may produce defensive knowledge for Guardian. The preferred handoff is an abstract security pattern: violated invariant, preconditions, observable indicators, detection logic, mitigation concept, and regression test. Operational exploit material is not required unless legitimately necessary for a controlled regression test.
+SECURITY-TEST produces findings and evidence. The destination is selected **after validation**, based on the nature of the result.
+
+Possible destinations include SPACE, Guardian, SPACE-INTEGRITY, SPACE-SECURITY, CORE, SYSTEM-FOUNDATION, OMEGA, AGI-Lab, GROWER, a product repository, a recovery repository, or another appropriate component.
+
+No destination is the default owner of SECURITY-TEST findings.
+
+## Repository registry
+
+The canonical registry is `REPOSITORY-REGISTRY.md`.
+
+Important: the connected GitHub interface currently exposes a verified subset of the account. The working registry therefore distinguishes **verified repositories** from the **owner-declared total** instead of inventing missing repository names. The owner-declared current total is 73 repositories; the registry must be reconciled against GitHub before treating 73 as independently verified.
+
+## Architecture map
+
+`ARCHITECTURE-MAP.md` describes components as security-test contexts and verified relationships. It is not a dependency graph and must not create relationships merely by naming them.
 
 ## Case IDs
 
