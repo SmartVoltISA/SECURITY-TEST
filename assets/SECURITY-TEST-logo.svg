@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240" role="img" aria-labelledby="title desc">
+  <title id="title">SECURITY-TEST</title>
+  <desc id="desc">Independent security research and validation laboratory.</desc>
+  <rect width="800" height="240" rx="32" fill="#0b1020"/>
+  <g transform="translate(48 48)">
+    <path d="M72 0 144 26v55c0 52-30 86-72 103C30 167 0 133 0 81V26L72 0Z" fill="none" stroke="#ffffff" stroke-width="10"/>
+    <path d="M72 34 105 47v31c0 25-13 45-33 57C52 123 39 103 39 78V47l33-13Z" fill="none" stroke="#8bd3ff" stroke-width="7"/>
+    <circle cx="72" cy="82" r="10" fill="#ffffff"/>
+    <path d="M72 92v22" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <text x="230" y="104" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="700" letter-spacing="3">SECURITY-TEST</text>
+  <text x="232" y="148" fill="#8bd3ff" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="2">RESEARCH · EVIDENCE · VALIDATION</text>
+  <text x="232" y="181" fill="#b9c2d0" font-family="Arial, Helvetica, sans-serif" font-size="16">INDEPENDENT TEST ENVIRONMENT</text>
+</svg>
