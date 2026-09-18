@@ -58,3 +58,11 @@ Inventory every privileged side-effect interface and add an integration test tha
 request -> Guardian -> authenticated receipt -> ExecutionGate -> adapter -> side effect -> independent observation
 
 Any direct path from AI/Skill/Tool/Core to a protected side effect is a finding.
+
+## Latest hardening pass
+
+ExecutionGate was further hardened on 2026-09-18: receipts are now bound to the full principal fingerprint (id, kind, trust, capabilities), and nonces are reserved at authorization time to prevent concurrent duplicate issuance. Regression coverage was added for identity substitution and nonce collision.
+
+Latest Guardian commits:
+- `6ad57044ee3345ac2660f508e7a3df998c771951`
+- `b6dbd4df83047624c5be91f2c0e5b2d5ea7888d6`
