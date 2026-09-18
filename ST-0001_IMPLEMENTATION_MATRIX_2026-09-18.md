@@ -2,55 +2,59 @@
 
 Status: STATIC REPOSITORY AUDIT COMPLETE / RUNTIME EXECUTION NOT AVAILABLE
 
-Important: GitHub Actions for Guardian are configured to run pytest, but no current successful workflow run was returned for the audited hardening commit. The repository audit itself states full CI execution is pending. Therefore source inspection is not converted into PASS.
+The Guardian repository now contains an authoritative in-process ExecutionGate. It authenticates execution receipts, binds them to the exact action fingerprint, enforces expiry and single-use, and re-checks Guardian immediately before the side effect. This hardens the local execution boundary, but it does not by itself prove that every real platform adapter uses the gate.
 
 | ID | Finding | Status |
 |---|---|---|
 | CP-001 | Capability escalation | PASS-UNIT / E2E OPEN |
 | CP-002 | Authority substitution | PASS-UNIT / E2E OPEN |
 | CP-003 | Policy self-grant | PASS-UNIT |
-| CP-004 | Confirmation replay | GAP |
-| CP-005 | TOCTOU | GAP |
-| CP-006 | Stale evidence | GAP |
-| CP-007 | Forged evidence | GAP |
+| CP-004 | Confirmation replay | HARDENED-LOCAL / E2E OPEN |
+| CP-005 | TOCTOU | HARDENED-LOCAL / E2E OPEN |
+| CP-006 | Stale evidence | HARDENED-LOCAL / E2E OPEN |
+| CP-007 | Forged evidence | HARDENED-LOCAL / E2E OPEN |
 | CP-008 | Tool-response poisoning | GAP / ARCHITECTURAL |
-| CP-009 | Alternate execution path | PARTIAL |
-| CP-010 | Concurrent actors | GAP |
+| CP-009 | Alternate execution path | PARTIAL / ADAPTER INVENTORY OPEN |
+| CP-010 | Concurrent actors | PARTIAL-LOCAL / GLOBAL OPEN |
 | CP-011 | Guardian self-modification | PARTIAL |
 | CP-012 | Core self-modification | GAP |
 | CP-013 | Self-replication | POLICY-ONLY |
 | CP-014 | Recovery poisoning | PARTIAL |
 | CP-015 | Audit suppression | GAP |
 | CP-016 | Emergency bypass | PASS-UNIT / ADAPTER OPEN |
-| CP-017 | Revocation race | GAP |
+| CP-017 | Revocation race | HARDENED-LOCAL / E2E OPEN |
 | CP-018 | Identity substitution | PARTIAL |
 
-## Evidence summary
+## Implemented hardening
 
-Confirmed by source-level evidence: explicit capabilities; default-deny policy; principal/action binding; ADMIN-gated policy changes; immutable/defensive registry boundaries; quarantine and emergency controls; audit events; sandbox-only treatment for unverified/high-risk execution; bidirectional Guardian boundary; evidence-first recovery; explicit deny-by-default distribution/self-deployment policy.
+SmartVoltISA/Guardian/src/guardian/execution_gate.py is now the required model for protected execution:
+1. Guardian evaluates the exact action.
+2. A receipt is minted only for ALLOW.
+3. Receipt is HMAC-authenticated inside the Guardian process.
+4. Receipt is bound to an exact action fingerprint.
+5. Receipt has a short expiry.
+6. Receipt nonce is single-use under a lock.
+7. Guardian is re-evaluated immediately before the side effect.
+8. A forged, altered, expired, reused, or revoked execution is rejected.
 
-Not confirmed: universal execution gate; freshness/nonces; TOCTOU resistance; independent verification as a mandatory commit gate; concurrent state semantics; complete self-modification resistance; complete self-replication resistance; fail-closed behavior when audit infrastructure fails; full external Surgery implementation.
+Regression tests are in tests/test_execution_gate.py.
 
-## Critical discovery
+## Important limitation
 
-SEC-0001 previously identified an independent DeviceController decision path that could produce ALLOW outside Guardian.evaluate and AuthorizationPipeline.authorize. Repository-wide search found no production caller, so a runtime bypass was not proven. The path was remediated and regression tests were added.
+This is a real boundary implementation, not proof of universal adoption. A future or external adapter can still bypass it if it has direct side-effect capability. Therefore ST-0001 remains NOT PASSED until the complete adapter/tool/skill/recovery/network/device/system execution graph is enumerated and every privileged side effect is forced through this boundary.
 
-This validates the purpose of ST-0001: policy correctness is not equivalent to system-wide enforcement.
+## Evidence
 
-## Verdict
+Guardian hardening commits:
+- Execution gate: 2d08d7f2508af2f0b0af5bf9551a609ac261a780
+- Execution gate tests: e96276044671f685ca50ebfa8af4b5d754ed3677
 
-ST-0001: NOT PASSED.
+Runtime CI evidence remains pending; source-level changes must not be called runtime PASS.
 
-Control-plane architecture: SUBSTANTIALLY PRESENT.
-Unit-level authorization boundaries: PRESENT.
-End-to-end enforcement: NOT PROVEN.
-AGI-control claim: NOT ESTABLISHED.
+## Next gate
 
-## Next required work
+Inventory every privileged side-effect interface and add an integration test that proves:
 
-1. Enumerate every privileged execution adapter.
-2. Introduce one authoritative execution gate.
-3. Bind authorization to request, state/version and freshness.
-4. Make independent verification mandatory before protected state commit.
-5. Implement adversarial tests for CP-004 through CP-018.
-6. Run full CI and retain raw workflow evidence.
+request -> Guardian -> authenticated receipt -> ExecutionGate -> adapter -> side effect -> independent observation
+
+Any direct path from AI/Skill/Tool/Core to a protected side effect is a finding.
